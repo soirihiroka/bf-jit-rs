@@ -1,0 +1,16 @@
+[package]
+name = "brainfuck"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.5.7", features = ["derive"] }
+dynasm = "3.2.0"
+dynasmrt = "2.0.0"
+itertools = "0.13.0"
+
+lazy_static = "1.4.0"
+libc = "0.2.155"
+stdio-override = "0.1.3"
