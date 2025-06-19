@@ -16,6 +16,7 @@ use crate::jit::aarch64_jit;
 /// ```
 ///
 /// This is a naive implementation, which we will optimize further in other implementations.
+#[allow(unreachable_code)]
 pub fn run(prog: &[u8]) -> Result<(), Box<dyn error::Error>> {
     // run
     #[cfg(target_arch = "x86_64")]
