@@ -104,26 +104,27 @@ struct State<'a> {
 
 impl<'a> State<'a> {
     unsafe extern "win64" fn getchar(state: *mut State, cell: *mut u8) -> u8 {
-        let state = &mut *state;
-        (state
-            .input
-            .read_exact(slice::from_raw_parts_mut(cell, 1))
-            .is_err()) as u8
+        unsafe {
+            let state = &mut *state;
+            (state
+                .input
+                .read_exact(slice::from_raw_parts_mut(cell, 1))
+                .is_err()) as u8
+        }
     }
 
     unsafe extern "win64" fn putchar(state: *mut State, cell: *mut u8) -> u8 {
-        let state = &mut *state;
-        state
-            .output
-            .write_all(slice::from_raw_parts(cell, 1))
-            .is_err() as u8
+        unsafe {
+            let state = &mut *state;
+            state
+                .output
+                .write_all(slice::from_raw_parts(cell, 1))
+                .is_err() as u8
+        }
     }
 
     fn new(input: Box<dyn BufRead + 'a>, output: Box<dyn Write + 'a>) -> State<'a> {
-        State {
-            input,
-            output,
-        }
+        State { input, output }
     }
 }
 
