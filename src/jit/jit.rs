@@ -1,7 +1,4 @@
-use std::{
-    error,
-    io::{self, Read, Write},
-};
+use std::error;
 
 #[cfg(target_arch = "x86_64")]
 use crate::jit::x64_jit;
