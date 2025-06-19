@@ -1,15 +1,15 @@
-use dynasmrt::{dynasm, DynasmApi, DynasmLabelApi};
 use dynasmrt::{AssemblyOffset, ExecutableBuffer};
+use dynasmrt::{DynasmApi, DynasmLabelApi, dynasm};
 
-use itertools::multipeek;
 use itertools::Itertools;
+use itertools::multipeek;
 
 use core::str;
 use std::error;
-use std::io::stdin;
-use std::io::stdout;
 use std::io::BufReader;
 use std::io::BufWriter;
+use std::io::stdin;
+use std::io::stdout;
 use std::io::{BufRead, Read, Write};
 use std::mem;
 use std::slice;
@@ -157,10 +157,8 @@ struct State<'a> {
 
 fn compile(prog: &bf_types::BfSrc) -> Result<(ExecutableBuffer, AssemblyOffset), &'static str> {
     let bf_ops = parse(&prog)?;
-    let mut ops=
-        dynasmrt::aarch64::Assembler::new().unwrap();
+    let mut ops = dynasmrt::aarch64::Assembler::new().unwrap();
     let mut loop_stack = vec![];
-    
 
     // literal pool
     dynasm!(ops
@@ -259,12 +257,19 @@ impl<'a> State<'a> {
     unsafe extern "C" fn getchar(state: *mut State, cell: *mut u8) -> u8 {
         let state = &mut *state;
         let err = state.output.flush().is_err();
-        (state.input.read_exact(slice::from_raw_parts_mut(cell, 1)).is_err() || err) as u8
+        (state
+            .input
+            .read_exact(slice::from_raw_parts_mut(cell, 1))
+            .is_err()
+            || err) as u8
     }
 
     unsafe extern "C" fn putchar(state: *mut State, cell: *mut u8) -> u8 {
         let state = &mut *state;
-        state.output.write_all(slice::from_raw_parts(cell, 1)).is_err() as u8
+        state
+            .output
+            .write_all(slice::from_raw_parts(cell, 1))
+            .is_err() as u8
     }
 
     fn new(input: Box<dyn BufRead + 'a>, output: Box<dyn Write + 'a>) -> State<'a> {
@@ -275,7 +280,6 @@ impl<'a> State<'a> {
         }
     }
 }
-
 
 pub fn run(prog: &bf_types::BfSrc) -> Result<(), Box<dyn error::Error>> {
     let (exe_buf, start) = compile(prog).unwrap();
