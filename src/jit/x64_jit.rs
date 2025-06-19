@@ -121,8 +121,8 @@ impl<'a> State<'a> {
 
     fn new(input: Box<dyn BufRead + 'a>, output: Box<dyn Write + 'a>) -> State<'a> {
         State {
-            input: input,
-            output: output,
+            input,
+            output,
         }
     }
 }
