@@ -1,3 +1,5 @@
+#![allow(clippy::fn_to_numeric_cast)]
+
 #[cfg(target_arch = "x86_64")]
 mod x64_jit;
 
