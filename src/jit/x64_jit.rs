@@ -10,7 +10,6 @@ use std::io::stdout;
 use std::io::{BufRead, Read, Write};
 use std::mem;
 use std::slice;
-use std::u8;
 
 use crate::bf_types::BF_MEMORY_SIZE;
 

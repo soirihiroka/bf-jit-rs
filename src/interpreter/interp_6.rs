@@ -1,6 +1,5 @@
 use std::{
     error,
-    ffi::CString,
     io::{self, Read},
 };
 
