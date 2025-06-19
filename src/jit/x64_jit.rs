@@ -211,7 +211,7 @@ fn compile(prog: &[u8]) -> Result<(ExecutableBuffer, AssemblyOffset), Box<dyn er
             ),
         }
     }
-    if loop_stack.len() != 0 {
+    if loop_stack.is_empty() {
         return Err("[ without matching ]".into());
     }
 
