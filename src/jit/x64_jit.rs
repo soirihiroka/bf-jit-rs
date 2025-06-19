@@ -151,7 +151,7 @@ macro_rules! call_extern {
 }
 
 fn compile(prog: &[u8]) -> Result<(ExecutableBuffer, AssemblyOffset), Box<dyn error::Error>> {
-    let bf_ops: Vec<Ops> = parse(&prog)?;
+    let bf_ops: Vec<Ops> = parse(prog)?;
     let mut ops: dynasmrt::Assembler<dynasmrt::x64::X64Relocation> =
         dynasmrt::x64::Assembler::new()?;
     let mut loop_stack: Vec<(dynasmrt::DynamicLabel, dynasmrt::DynamicLabel)> = vec![];
