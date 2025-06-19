@@ -353,7 +353,7 @@ pub fn test_hell(run_func: &RunFn) -> Result<(), Box<dyn Error>> {
         }
     };
 
-    print!("Test passed\n");
+    println!("Test passed");
 
     match content {
         Ok(c) => {
