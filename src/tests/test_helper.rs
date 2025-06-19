@@ -9,7 +9,6 @@ lazy_static! {
 
 use std::error::Error;
 
-
 type RunFn = (dyn Fn(&[u8]) -> Result<(), Box<dyn Error>>);
 
 pub fn test_run(run_func: &RunFn) -> Result<(), Box<dyn Error>> {
@@ -353,7 +352,7 @@ pub fn test_hell(run_func: &RunFn) -> Result<(), Box<dyn Error>> {
             panic!("Error running program: {}", e)
         }
     };
-    
+
     print!("Test passed\n");
 
     match content {
@@ -363,10 +362,10 @@ pub fn test_hell(run_func: &RunFn) -> Result<(), Box<dyn Error>> {
             match c.as_str() {
                 "Hello World! 255\n" => {
                     println!("Test passed with: Hello World! 255\n");
-                },
+                }
                 "Hello world! 65535\n" => {
                     println!("Test passed with: Hello world! 65535\n");
-                },
+                }
                 "Hello, world!\n" => {
                     println!("Test passed with: Hello, world!\n");
                 }

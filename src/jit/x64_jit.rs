@@ -1,12 +1,12 @@
-use dynasmrt::{dynasm, DynasmApi, DynasmLabelApi};
 use dynasmrt::{AssemblyOffset, ExecutableBuffer};
+use dynasmrt::{DynasmApi, DynasmLabelApi, dynasm};
 
 use core::str;
 use std::error;
-use std::io::stdin;
-use std::io::stdout;
 use std::io::BufReader;
 use std::io::BufWriter;
+use std::io::stdin;
+use std::io::stdout;
 use std::io::{BufRead, Read, Write};
 use std::mem;
 use std::slice;

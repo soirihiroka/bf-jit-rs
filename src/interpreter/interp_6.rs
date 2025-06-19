@@ -1,5 +1,7 @@
 use std::{
-    error, ffi::CString, io::{self, Read}
+    error,
+    ffi::CString,
+    io::{self, Read},
 };
 
 use libc::c_int;
