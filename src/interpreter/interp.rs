@@ -1,6 +1,6 @@
 use std::error;
 
-use crate::{bf_types, interpreter::*};
+use crate::interpreter::*;
 
 pub enum OptimizationLevel {
     Raw,
