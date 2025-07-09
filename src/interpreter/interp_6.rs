@@ -1,6 +1,5 @@
 use std::{
-    error,
-    io::{self, Read},
+    error, ffi::CString, io::{self, Read}
 };
 
 use libc::c_int;
@@ -64,8 +63,8 @@ pub fn run(prog: &[u8]) -> Result<(), Box<dyn error::Error>> {
                 prog_ops.push(Ops::Add(count));
                 i = j - 1;
             }
-            '[' => prog_ops.push(Ops::LBrack(usize::MAX)),
-            ']' => prog_ops.push(Ops::RBrack(usize::MAX)),
+            '[' => prog_ops.push(Ops::LBrack(usize::max_value())),
+            ']' => prog_ops.push(Ops::RBrack(usize::max_value())),
             '.' => prog_ops.push(Ops::Output),
             ',' => prog_ops.push(Ops::Input),
             _ => (),
