@@ -1,5 +1,7 @@
 use std::{fs::File, io::Write};
 
+use crate::bf_types;
+
 pub fn transpile_to_string(bf_src: &[u8]) -> String {
     let mut c_program = String::new();
 

@@ -56,7 +56,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
             interpreter::interp::run(&prog, Some(OptimizationLevel::High))?;
         }
         "jit" => {
-            jit::run(&prog)?;
+            jit::jit::run(&prog)?;
         }
         "bf2c" => {
             let output_file = cli.output.ok_or("Output file required for bf2c mode")?;

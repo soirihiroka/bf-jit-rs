@@ -1,15 +1,16 @@
+use dynasmrt::{dynasm, DynasmApi, DynasmLabelApi};
 use dynasmrt::{AssemblyOffset, ExecutableBuffer};
-use dynasmrt::{DynasmApi, DynasmLabelApi, dynasm};
 
 use core::str;
 use std::error;
-use std::io::BufReader;
-use std::io::BufWriter;
 use std::io::stdin;
 use std::io::stdout;
+use std::io::BufReader;
+use std::io::BufWriter;
 use std::io::{BufRead, Read, Write};
 use std::mem;
 use std::slice;
+use std::u8;
 
 use crate::bf_types::BF_MEMORY_SIZE;
 
@@ -104,27 +105,26 @@ struct State<'a> {
 
 impl<'a> State<'a> {
     unsafe extern "win64" fn getchar(state: *mut State, cell: *mut u8) -> u8 {
-        unsafe {
-            let state = &mut *state;
-            (state
-                .input
-                .read_exact(slice::from_raw_parts_mut(cell, 1))
-                .is_err()) as u8
-        }
+        let state = &mut *state;
+        (state
+            .input
+            .read_exact(slice::from_raw_parts_mut(cell, 1))
+            .is_err()) as u8
     }
 
     unsafe extern "win64" fn putchar(state: *mut State, cell: *mut u8) -> u8 {
-        unsafe {
-            let state = &mut *state;
-            state
-                .output
-                .write_all(slice::from_raw_parts(cell, 1))
-                .is_err() as u8
-        }
+        let state = &mut *state;
+        state
+            .output
+            .write_all(slice::from_raw_parts(cell, 1))
+            .is_err() as u8
     }
 
     fn new(input: Box<dyn BufRead + 'a>, output: Box<dyn Write + 'a>) -> State<'a> {
-        State { input, output }
+        State {
+            input: input,
+            output: output,
+        }
     }
 }
 
@@ -151,7 +151,7 @@ macro_rules! call_extern {
 }
 
 fn compile(prog: &[u8]) -> Result<(ExecutableBuffer, AssemblyOffset), Box<dyn error::Error>> {
-    let bf_ops: Vec<Ops> = parse(prog)?;
+    let bf_ops: Vec<Ops> = parse(&prog)?;
     let mut ops: dynasmrt::Assembler<dynasmrt::x64::X64Relocation> =
         dynasmrt::x64::Assembler::new()?;
     let mut loop_stack: Vec<(dynasmrt::DynamicLabel, dynasmrt::DynamicLabel)> = vec![];
@@ -212,7 +212,7 @@ fn compile(prog: &[u8]) -> Result<(ExecutableBuffer, AssemblyOffset), Box<dyn er
             ),
         }
     }
-    if loop_stack.is_empty() {
+    if loop_stack.len() != 0 {
         return Err("[ without matching ]".into());
     }
 
