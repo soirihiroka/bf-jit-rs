@@ -68,7 +68,7 @@ fn parse(prog: &[u8]) -> Result<OpSequence, &'static str> {
             '[' => {
                 // Place holder
                 bracket_index_stack.push(prog_ops.len());
-                prog_ops.push(Ops::LBrack(usize::max_value()));
+                prog_ops.push(Ops::LBrack(usize::MAX));
             }
             ']' => {
                 let open_bracket = bracket_index_stack.pop().unwrap();
